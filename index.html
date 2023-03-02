@@ -24,32 +24,33 @@
                 <p>Let's do this!</p>
                 <div class="entry-row">
                     <div class="entry first">
-                        <label for="userFirst">FIRST NAME</label>
-                        <input id="userFirst" name="first" type="text">
+                        <label for="user-first">FIRST NAME</label>
+                        <input id="user-first" name="first" type="text" required>
                     </div>
                     <div class="entry last">
-                        <label for="userLast">LAST NAME</label>
-                        <input id="userLast" name="last" type="text">
+                        <label for="user-last">LAST NAME</label>
+                        <input id="user-last" name="last" type="text" required>
                     </div>
                 </div>
                 <div class="entry-row">
                     <div class="entry email">
-                        <label for="userEmail">EMAIL</label>
-                        <input id="userEmail" name="email" type="email">
+                        <label for="user-email">EMAIL</label>
+                        <input id="user-email" name="email" type="email" required>
                     </div>
                     <div class="entry phone">
-                        <label for="userPhone">PHONE NUMBER</label>
-                        <input id="userPhone" name="phone" type="tel">
+                        <label for="user-phone">PHONE NUMBER</label>
+                        <input id="user-phone" name="phone" type="tel" pattern="\d{3}[\-]?\d{3}[\-]?\d{4}" required>
                     </div>
                 </div>
                 <div class="entry-row">
                     <div class="entry password">
-                        <label for="userPassword" data-help="* Passwords do not match">PASSWORD</label>
-                        <input id="userPassword" name="password" type="password" class="error">
+                        <label for="user-password">PASSWORD</label>
+                        <input id="user-password" name="password" type="password" class="error" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required>
+                        <div id="password-error">* Passwords do not match</div>
                     </div>
                     <div class="entry confirm">
-                        <label for="userConfirmPassword">CONFIRM PASSWORD</label>
-                        <input id="userConfirmPassword" name="confirm" type="password" class="error">
+                        <label for="user-confirm-password">CONFIRM PASSWORD</label>
+                        <input id="user-confirm-password" name="confirm" type="password" class="error" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required>
                     </div>
                 </div>
             </div>
@@ -59,5 +60,29 @@
             </div>
         </form>
     </div>
+    <script>
+        const password = document.querySelector("#user-password");
+        const passwordConfirm = document.querySelector("#user-confirm-password");
+        const passwordError = document.querySelector("#password-error");
+
+        console.log(passwordError);
+
+        function passwordMatch(e) {
+            if (password.value === passwordConfirm.value) {
+                passwordError.style.visibility = "hidden";
+                password.className = "";
+                passwordConfirm.className = "";
+                return 1;
+            } else {
+                passwordError.style.visibility = "visible";
+                password.className = "error";
+                passwordConfirm.className = "error";
+                return 0;
+            }
+        }
+
+        password.addEventListener("input", passwordMatch);
+        passwordConfirm.addEventListener("input", passwordMatch);
+    </script>
 </body>
 </html>
